@@ -1,0 +1,27 @@
+### Maven
+target/
+*.class
+*.jar
+*.war
+
+### IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+### Terraform
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/*.tfvars
+infra/terraform/.terraform.lock.hcl
+infra/terraform/crash.log
+
+### Env
+.env
+*.env.local
+
+### OS
+.DS_Store
+Thumbs.db

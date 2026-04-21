@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mensageria-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mensageria
+      MYSQL_USER: mensageria
+      MYSQL_PASSWORD: mensageria
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "mensageria", "-pmensageria"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: mensageria-app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: mensageria
+      DB_USER: mensageria
+      DB_PASSWORD: mensageria
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  mysql_data:
